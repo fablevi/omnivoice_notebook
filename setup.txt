@@ -1,0 +1,15 @@
+python3.13 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip wheel setuptools ipykernel
+cd unsloth-src
+pip install -e ".[intelgputorch2120]" --force-reinstall --no-cache-dir
+cd ..
+python -c "from unsloth import FastModel; print('UNSLOTH OK!')"
+
+pip install --upgrade \
+    "torch==2.13.0+xpu" \
+    "torchvision==0.28.0+xpu" \
+    "triton-xpu>=3.7.2" \
+    dpcpp-cpp-rt intel-sycl-rt intel-opencl-rt intel-cmplr-lib-rt intel-cmplr-lib-ur \
+    onemkl-sycl-blas onemkl-sycl-dft onemkl-sycl-lapack onemkl-sycl-rng onemkl-sycl-sparse \
+    --extra-index-url https://download.pytorch.org/whl/xpu
